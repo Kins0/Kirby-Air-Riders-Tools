@@ -316,19 +316,22 @@ def get_src_level_id(course: str, category: str) -> str:
 
     return level_ids_fr[course] if category == AIR_RIDE_FR_ID else level_ids_ta[course]
 
-def validate_env(submit_type: str) -> void:
+def validate_env(submit_type: str) -> str:
     if submit_type == "0":
-        print("Submitting to both Speedrider and Speedrun.com")
         if SRC_API_KEY == None or GAMERTAG == None or TWITTER == None or SRC_API_KEY == "" or GAMERTAG == "" or TWITTER == "":
             raise ValueError("Make sure SRC_API_KEY, GAMERTAG and TWITTER in config.env are set")
+        print("Submitting to both Speedrider and Speedrun.com")
+        return submit_type
     elif submit_type == "1":
-        print("Submitting only to Speedrider")
         if GAMERTAG == None or TWITTER == None or GAMERTAG == "" or TWITTER == "":
             raise ValueError("Make sure GAMERTAG and TWITTER in config.env are set")
+        print("Submitting only to Speedrider")
+        return submit_type
     elif submit_type == "2":
-        print("Submitting only to Speedrun.com")
         if SRC_API_KEY == None or SRC_API_KEY == "":
             raise ValueError("Make sure SRC_API_KEY in config.env is set")
+        print("Submitting only to Speedrun.com")
+        return submit_type
     else:
         raise ValueError("Enter one of the listed numbers")
         
@@ -510,25 +513,20 @@ def submit_run(
         }
     }
 
-    if "0" in submit_type or "1" in submit_type:
+    if submit_type in {"0", "1"}:
         speedrider_response = session.post(url=FORM_RESPONSE_URL, data=urlencode(speedrider_data, quote_via=quote), headers={"Content-Type": "application/x-www-form-urlencoded"})
         if speedrider_response.status_code == 200 or speedrider_response.status_code == 302:
             print("Submitted successfully to Speedrider")
         else:
             print(f"Submission to Speedrider might have failed: {speedrider_response.status_code}")
 
-    if "0" in submit_type or "2" in submit_type:
-        src_response = session.post(url=SRC_URL, json=src_data, headers={"Content-Type": "application/json", "X-API-Key": SRC_API_KEY)
+    if submit_type in {"0", "2"}:
+        src_response = session.post(url=SRC_URL, json=src_data, headers={"Content-Type": "application/json", "X-API-Key": SRC_API_KEY})
         if src_response.status_code == 201:
             print("Submitted successfully to Speedrun.com")
         else:
             print(f"Submission to Speedrun.com might have failed: {src_response.status_code}")
 
-
-
-# CLI input
-gamertag = "kins0"
-twitter = "Kins000"
 
 submit_type = validate_env(input("Where to submit (enter one of the following numbers): 0 = Both sites, 1 = Speedrider, 2 = Speedrun.com \n").strip())
 mode = validate_mode(input("Mode [Free Run/Time Attack]: ").strip())
