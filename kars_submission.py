@@ -274,7 +274,7 @@ def validate_rider(rider: str) -> str:
 def get_src_level_id(course: str, category: str) -> str:
     level_ids_fr = {
         "Floria Fields": "qyzpy5d1",
-        "Waveflow waters": "ln8w0dnl",
+        "Waveflow Waters": "ln8w0dnl",
         "Airtopia Ruins": "10vzm0pl",
         "Crystalline Fissure": "qj704woq",
         "Steamgust Forge": "q650xyol",
@@ -295,7 +295,7 @@ def get_src_level_id(course: str, category: str) -> str:
 
     level_ids_ta = {
         "Floria Fields": "le2r4npl",
-        "Waveflow waters": "q5vn54rl",
+        "Waveflow Waters": "q5vn54rl",
         "Airtopia Ruins": "lx5p8gj1",
         "Crystalline Fissure": "14oyv9wq",
         "Steamgust Forge": "192m95jq",
