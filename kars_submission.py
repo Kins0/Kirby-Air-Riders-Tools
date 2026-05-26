@@ -23,6 +23,11 @@ TOP_RIDE_ID = "wkp445wk" # No use yet, just for future proofing
 AIR_RIDE_TA_ID = "z27qqvgk"
 AIR_RIDE_FR_ID = "zdnjjyqk"
 
+TRACK_VAR_TA = "ylq4rkmn"
+TRACK_VAR_FR = "gnxq7rj8"
+TYPE_VAR_TA = "kn0e5z38"
+TYPE_VAR_FR = "ql6964jl"
+
 def now_ms() -> str:
     return str(int(time.time() * 1000))
 
@@ -483,7 +488,7 @@ def submit_run(
             "emulated": False,
             "video": video_url,
             "variables": {
-                "ylq4rkmn": {
+                TRACK_VAR_FR if mode == "Free Run" else TRACK_VAR_TA: {
                     "type": "pre-defined",
                     "name": "Track",
                     "value": get_src_level_id(course, mode)
@@ -503,7 +508,7 @@ def submit_run(
                     "name": "Version",
                     "value": "1390wnk1" # This will change if the game receives an update.
                 },
-                "kn0e5z38": {
+                TYPE_VAR_FR if mode == "Free Run" else TYPE_VAR_TA: {
                     "type": "pre-defined",
                     "name": "Type",
                     "value": get_run_type(machine)
