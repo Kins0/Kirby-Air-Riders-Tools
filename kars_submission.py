@@ -439,11 +439,11 @@ def time_src_converter(time: str) -> float:
 
         return total_time_in_seconds
 
-def get_run_type(machine) -> str: # for SRC, determines "Restricted" or "Legendaries"
+def get_run_type(machine, mode) -> str: # for SRC, determines "Restricted" or "Legendaries"
     if machine == "Dragoon" or machine == "Hydra" or machine == "Leo":
-        return "1pyp0d81"
+        return "q75j4rd1" if mode == "Free Run" else "1pyp0d81"
     else:
-        return "192m988q"
+        return "qkej4mkq" if mode == "Free Run" else "192m988q"
 
 def submit_run(
     mode: str,
@@ -491,7 +491,7 @@ def submit_run(
                 TRACK_VAR_FR if mode == "Free Run" else TRACK_VAR_TA: {
                     "type": "pre-defined",
                     "name": "Track",
-                    "value": get_src_level_id(course, mode)
+                    "value": get_src_level_id(course, AIR_RIDE_FR_ID if mode == "Free Run" else AIR_RIDE_TA_ID)
                 },
                 "yn26r10l": {
                     "type": "pre-defined",
@@ -511,7 +511,7 @@ def submit_run(
                 TYPE_VAR_FR if mode == "Free Run" else TYPE_VAR_TA: {
                     "type": "pre-defined",
                     "name": "Type",
-                    "value": get_run_type(machine)
+                    "value": get_run_type(machine, mode)
                 }
             }
             
